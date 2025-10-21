@@ -1,9 +1,9 @@
 from django.contrib import admin
 from django.urls import path
-from login.views.views import LoginView
+from login.views.views import LoginFormView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',LoginView.as_view(), name='login'),
+    path('',LoginFormView.as_view(), name='login'),
     
 ]

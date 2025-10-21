@@ -4,10 +4,10 @@ from .models import usuario
 
 #CREAR FORMULARIO PARA EL INICIO DE SESION (REEMPLAZAR DE FORMA DINAMICA EN LA CARD DE BOOSTRAP)
 class LoginForm(forms.ModelForm):
-    class Meta: 
+    class Meta:
         model = usuario
-        fields = ['usuario', 'password']
+        fields = ['correo', 'password'] 
         widgets = {
-            'usuario' : forms.TextInput(),
-            'password' :forms.PasswordInput(),
+            'correo': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Correo'}),
+            'password': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Contraseña'}),
         }
