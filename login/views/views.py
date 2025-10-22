@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.views.generic import TemplateView, FormView
-from login.forms import LoginForm
+from django.views.generic import TemplateView, FormView, View
+from login.forms import LoginForm, RecuperarPasswordForm
 from login.models import usuario
 from django.contrib import messages
+import uuid
 
 
 #NECESITO CAMBIAR EL METODO PARA SI NO SE ENCUENTRA LOGUEADO IR A LOGIN 
@@ -82,3 +83,43 @@ class LoginFormView(FormView):
         return super().form_invalid(form)
         
 
+
+class RecuperarPasswordView(FormView):
+    template_name = 'recuperar.html'
+    form_class = RecuperarPasswordForm
+    success_url = '/recuperar/' 
+
+    def form_valid(self, form):
+        correo = form.cleaned_data['correo']
+        nombre = form.cleaned_data['nombre']
+        apellido = form.cleaned_data['apellido']
+        cargo = form.cleaned_data['cargo']
+
+        try:
+            user = usuario.objects.get(correo=correo)
+        except usuario.DoesNotExist:
+            messages.error(self.request, "No existe un usuario con ese correo.")
+            return self.form_invalid(form)
+
+        if (user.nombre.lower() != nombre.lower() or 
+            user.apellido.lower() != apellido.lower() or 
+            user.tipo_cargo.cargo.lower() != cargo.lower()):
+            messages.error(self.request, "Los datos no coinciden con el usuario registrado.")
+            return self.form_invalid(form)
+
+       
+        nueva_password = uuid.uuid4().hex[:8] 
+
+        user.password = nueva_password
+        user.intentos = 0
+        user.save()
+
+        messages.success(self.request, f"Su nueva contraseña es: {nueva_password}")
+
+        return super().form_valid(form)
+    
+
+class LogoutView(View):
+    def get(self, request):
+        request.session.flush()  # Borra toda la sesión
+        return redirect('login')

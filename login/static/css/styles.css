@@ -18,3 +18,8 @@ label {
 /* body {
     background-color: #2191FB;
 } */
+footer {
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    background-color: #343a40; /* Puedes ajustar el tono */
+}

@@ -8,34 +8,50 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
-<body>
-   <header>
+<body class="d-flex flex-column min-vh-100">
+<header>
+
+
   <nav class="navbar navbar-expand-lg navbar bg-primary">
   <div class="container-fluid">
+    <!-- Logo y bienvenida -->
+    <img src="{% static 'images/logo.jpg' %}" alt="Logo" style="height:40px; margin-right:10px;">
     {% if user %}
       <span class="navbar-text text-white me-3">
-        Bienvenido, {{ user.nombre }} {{user.apellido}} ({{ user.tipo_cargo.cargo }})
+        Bienvenido, {{ user.nombre }} {{ user.apellido }} ({{ user.tipo_cargo.cargo }})
       </span>
-    {% endif %}  
-    <a class="navbar-brand" href="{}">Inicio</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    {% endif %}
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
+    <!-- Links -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- Links principales a la izquierda (sin acción) -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="{}">Home</a>
+          <a class="nav-link text-white" href="#" role="button" onclick="return false;">Oficinas</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{}">Tecnologias</a>
+          <a class="nav-link text-white" href="#" role="button" onclick="return false;">Certificados</a>
         </li>
-      <!-- <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button class="btn btn-outline-success" type="submit">Buscar</button>
-      </form> -->
+        <li class="nav-item">
+          <a class="nav-link text-white" href="#" role="button" onclick="return false;">Gestión de horas</a>
+        </li>
+      </ul>
+
+      <!-- Logout a la derecha -->
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'logout' %}">Cerrar sesión</a>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>
+
 </header>
 
 
@@ -45,10 +61,13 @@
     {% endblock content %}    
 
 
-
-<footer>
-    <p>secretaria ministerial regional de salud de la Región del Maule</p> 
+<footer class="bg-secondary text-white mt-auto py-3">
+  <div class="container text-center">
+    <p class="mb-0">© 2025 Secretaria Ministerial Regional de salud de la Región del Maule. Todos los derechos reservados.</p>
+    <small>Desarrollado por Gonzalo Basoalto</small>
+  </div>
 </footer>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
