@@ -112,6 +112,7 @@ class RecuperarPasswordView(FormView):
 
         user.password = nueva_password
         user.intentos = 0
+        user.activo = True
         user.save()
 
         messages.success(self.request, f"Su nueva contraseña es: {nueva_password}")
